@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Iniciar o servidor PHP
+# Iniciar o servidor PHP temporário
 php -S localhost:8000 &
-echo "Servidor PHP iniciado em localhost:8000"
+SERVER_PID=$!
 
-# Esperar alguns segundos para garantir que o servidor PHP esteja funcionando
-sleep 3
+# Esperar um pouco para o servidor estar pronto
+sleep 2
 
-# Obter o IP e a imagem usando o script PHP
-IP_IMAGE=$(curl -s http://localhost:8000/)
+# Abrir a página HTML no navegador padrão
+xdg-open http://localhost:8000/index.html
 
-# Exibir o IP e a imagem no terminal
-echo "$IP_IMAGE"
+# Aguardar o usuário fechar o navegador
+read -p "Pressione Enter para encerrar o servidor..." -r
 
 # Encerrar o servidor PHP
-killall php
+kill $SERVER_PID
